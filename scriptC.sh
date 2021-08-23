@@ -1,9 +1,6 @@
 #!bin/bash
-#Looking for PID of java
-PID=$(ps -C java -o pid | egrep -o '[0-9.]+')
 
-#Creating directory if its not created
-mkdir -p /tmp/investigation
-
-#Log all the files accessed by java processes to access_$PID.txt
-ls -l /proc/$PID/fd > /tmp/investigation/access_$PID.txt
+mkdir -p /tmp/investigation #Creating investigation folder if its not exits 
+for pid in $(ps -C java -o pid=); do #Starting the loop that search java PIDs
+   ls -l /proc/$pid/fd > /tmp/investigation/access_$pid.txt #Log that PIDs to access_$pid.txt
+done #The end of the loop
